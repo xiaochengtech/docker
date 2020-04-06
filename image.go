@@ -23,6 +23,10 @@ type Image struct {
 }
 
 func (m Image) MarshalYAML() (result interface{}, err error) {
+	if len(m.Name) == 0 {
+		err = errors.New("docker: image name can not be empty")
+		return
+	}
 	if len(m.Tag) > 0 {
 		result = fmt.Sprintf("%s:%s", m.Name, m.Tag)
 	} else {

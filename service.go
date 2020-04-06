@@ -41,7 +41,7 @@ type Service struct {
 	// TODO network_mode
 	Networks map[string]NetworkMap `yaml:"networks,omitempty"` // 加入的网络
 	// TODO pid
-	Ports   []Port `yaml:"ports,omitempty"`   // 暴漏的端口号
+	Ports   []Port `yaml:"ports,omitempty"`   // 暴露的端口号
 	Restart string `yaml:"restart,omitempty"` // 重启策略
 	// TODO secrets
 	// TODO security_opt
