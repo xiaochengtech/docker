@@ -10,14 +10,16 @@
 
 package docker
 
-// 完整的配置文件
-type Yml struct {
-	Version  string               `yaml:"version"`            // 版本号
-	Services map[string]Service   `yaml:"services"`           // 服务配置
-	Volumes  map[string]Volume    `yaml:"volumes,omitempty"`  // 挂载卷配置
-	Networks map[string]Network   `yaml:"networks,omitempty"` // 网络配置
-	Secrets  map[string]YmlSecret `yaml:"secrets,omitempty"`  // 密钥
-	// TODO configs
-	// TODO Variable substitution
-	// TODO Extension fields
+// 密钥(Long Syntax)
+type SecretComplex struct {
+	Source string `yaml:"source"`           // 名称
+	Target string `yaml:"target,omitempty"` // 文件名
+	Uid    string `yaml:"uid,omitempty"`    // 文件UID
+	Gid    string `yaml:"gid,omitempty"`    // 文件GID
+	Mode   string `yaml:"mode,omitempty"`   // 文件权限
+}
+
+// 实现公共接口
+func (SecretComplex) IsSecret() bool {
+	return true
 }
