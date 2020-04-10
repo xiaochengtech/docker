@@ -22,6 +22,14 @@ type Image struct {
 	Tag  string
 }
 
+// 新建一个镜像
+func NewImage(name string, tag string) Image {
+	return Image{
+		Name: name,
+		Tag:  tag,
+	}
+}
+
 func (m Image) MarshalYAML() (result interface{}, err error) {
 	if len(m.Name) == 0 {
 		err = errors.New("docker: image name can not be empty")
