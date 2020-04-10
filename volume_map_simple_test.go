@@ -30,7 +30,7 @@ func TestVolumeMapSimple(t *testing.T) {
 		{item: "~/configs:/udp", wantHost: "~/configs", wantContainer: "/udp", wantErr: false},
 		{item: "~/configs:/etc/configs/:ro", wantHost: "~/configs", wantContainer: "/etc/configs/", wantMode: "ro", wantErr: false},
 		{item: "datavolume:/var/lib/mysql", wantHost: "datavolume", wantContainer: "/var/lib/mysql", wantErr: false},
-		{item: "d<tab>tavolume::ro", wantHost: "datavolume", wantContainer: "", wantMode: "ro", wantErr: true},
+		{item: "datavolume::ro", wantHost: "datavolume", wantContainer: "", wantMode: "ro", wantErr: true},
 		{item: ":/var/lib/mysql", wantHost: "", wantContainer: "/var/lib/mysql", wantMode: "", wantErr: true},
 	}
 	for i, tt := range tests {

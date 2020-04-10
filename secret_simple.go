@@ -12,7 +12,6 @@ package docker
 
 import (
 	"errors"
-	"fmt"
 )
 
 // 密钥(Short Syntax)
@@ -37,7 +36,7 @@ func (m SecretSimple) MarshalYAML() (result interface{}, err error) {
 		err = errors.New("docker: simple-secret source can not be empty")
 		return
 	}
-	result = fmt.Sprintf("%s", m.Source)
+	result = m.Source
 	return
 }
 

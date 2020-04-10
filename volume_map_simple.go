@@ -24,17 +24,18 @@ type VolumeMapSimple struct {
 }
 
 // 新建一个路径A到路径B的映射
-func NewVolumeMapSimple(hostVolumeMap string, containerVolumeMap string, mode string) VolumeMapSimple {
+func NewVolumeMapSimple(hostVolumeMap string, containerVolumeMap string) VolumeMapSimple {
 	return VolumeMapSimple{
 		Host:      hostVolumeMap,
 		Container: containerVolumeMap,
-		Mode:      mode,
 	}
 }
 
 // 新建一个相同的路径映射
 func NewVolumeMapSimpleSame(volumeMap string) VolumeMapSimple {
-	return NewVolumeMapSimple(volumeMap, volumeMap, VolumeReadOnly)
+	volumeMapSimple := NewVolumeMapSimple(volumeMap, volumeMap)
+	volumeMapSimple.Mode = VolumeReadOnly
+	return volumeMapSimple
 }
 
 // 实现公共接口
