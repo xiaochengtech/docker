@@ -10,14 +10,19 @@
 
 package docker
 
-// 完整的配置文件
-type Yml struct {
-	Version  string               `yaml:"version"`            // 版本号
-	Services map[string]Service   `yaml:"services"`           // 服务配置
-	Volumes  map[string]Volume    `yaml:"volumes,omitempty"`  // 挂载卷配置
-	Networks map[string]Network   `yaml:"networks,omitempty"` // 网络配置
-	Secrets  map[string]YmlSecret `yaml:"secrets,omitempty"`  // 密钥
-	// TODO configs
-	// TODO Variable substitution
-	// TODO Extension fields
+// 挂载卷
+type VolumeMapComplex struct {
+	Type     string `yaml:"type"`                // 挂载类型
+	Source   string `yaml:"source"`              // 外部的源地址
+	Target   string `yaml:"target"`              // 容器内的目标地址
+	ReadOnly string `yaml:"read_only,omitempty"` // 只读标志
+	// TODO bind
+	// TODO volume
+	// TODO tmpfs
+	// TODO consistency
+}
+
+// 实现公共接口
+func (VolumeMapComplex) IsVolumeMap() bool {
+	return true
 }

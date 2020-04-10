@@ -12,50 +12,44 @@ package docker
 
 import (
 	"errors"
-	"fmt"
-	"strings"
 )
 
-// 镜像
-type Image struct {
-	Name string
-	Tag  string
+// 密钥(Short Syntax)
+type SecretSimple struct {
+	Source string // 名称
 }
 
-// 新建一个镜像
-func NewImage(name string, tag string) Image {
-	return Image{
-		Name: name,
-		Tag:  tag,
+// 新建一个密钥
+func NewSecretSimple(source string) SecretSimple {
+	return SecretSimple{
+		Source: source,
 	}
 }
 
-func (m Image) MarshalYAML() (result interface{}, err error) {
-	if len(m.Name) == 0 {
-		err = errors.New("docker: image name can not be empty")
+// 实现公共接口
+func (SecretSimple) IsSecret() bool {
+	return true
+}
+
+func (m SecretSimple) MarshalYAML() (result interface{}, err error) {
+	if len(m.Source) == 0 {
+		err = errors.New("docker: simple-secret source can not be empty")
 		return
 	}
-	if len(m.Tag) > 0 {
-		result = fmt.Sprintf("%s:%s", m.Name, m.Tag)
-	} else {
-		result = m.Name
-	}
+	result = m.Source
 	return
 }
 
-func (m *Image) UnmarshalYAML(unmarshal func(interface{}) error) (err error) {
+func (m *SecretSimple) UnmarshalYAML(unmarshal func(interface{}) error) (err error) {
 	var origin string
 	if err = unmarshal(&origin); err != nil {
 		return
 	}
-	parts := strings.Split(origin, ":")
-	if len(parts) > 2 {
-		err = errors.New("docker: image format error")
+	m.Source = origin
+	// 校验
+	if len(m.Source) == 0 {
+		err = errors.New("docker: simple-secret format error")
 		return
-	}
-	m.Name = parts[0]
-	if len(parts) > 1 {
-		m.Tag = parts[1]
 	}
 	return
 }

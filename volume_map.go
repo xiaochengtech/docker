@@ -10,14 +10,7 @@
 
 package docker
 
-// 挂载卷
-type VolumeMap struct {
-	Type     string `yaml:"type"`                // 挂载类型
-	Source   string `yaml:"source"`              // 外部的源地址
-	Target   string `yaml:"target"`              // 容器内的目标地址
-	ReadOnly string `yaml:"read_only,omitempty"` // 只读标志
-	// TODO bind
-	// TODO volume
-	// TODO tmpfs
-	// TODO consistency
+// 暴露的路径映射的公共接口
+type VolumeMap interface {
+	IsVolumeMap() bool
 }
